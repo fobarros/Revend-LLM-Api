@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+      - ./models:/models
+    environment:
+      - NER_MODEL=/models/ner-model
+      - FALLBACK_NER_MODEL=xlm-roberta-base
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_DEBUG=False
+      - STORAGE_TYPE=redis
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=chave_secreta_para_desenvolvimento_local
+      - PYTHONPATH=/app
+      - HUGGINGFACE_TOKEN=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
+    depends_on:
+      - redis
+    restart: unless-stopped
+    working_dir: /app
+    command: ["python", "main/main.py"]
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
