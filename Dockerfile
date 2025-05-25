@@ -1,25 +1,16 @@
-FROM python:3.9-slim
+# Dockerfile
+FROM base:latest
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copiar apenas o requirements primeiro para cache eficiente
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir --upgrade pip setuptools && \
+RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir -r requirements.txt \
-    --retries 10 --timeout 60 \
-    --trusted-host pypi.org --trusted-host files.pythonhosted.org
+        --timeout 60 --retries 10 \
+        --trusted-host pypi.org --trusted-host files.pythonhosted.org
 
-# Agora sim copiar o restante
 COPY . .
-
-# Garantir que o diretório do modelo exista
-RUN mkdir -p /models/ner-model
 
 ENV PYTHONPATH=/app
 

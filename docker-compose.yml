@@ -2,12 +2,11 @@ version: '3.8'
 
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - ./app:/app
-      - ./models:/models
     environment:
       - NER_MODEL=/models/ner-model
       - FALLBACK_NER_MODEL=xlm-roberta-base
@@ -24,6 +23,9 @@ services:
     restart: unless-stopped
     working_dir: /app
     command: ["python", "main/main.py"]
+    volumes:
+      - ./app:/app
+      - ./models:/models
 
   redis:
     image: redis:alpine

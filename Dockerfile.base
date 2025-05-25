@@ -1,0 +1,19 @@
+# Dockerfile.base
+FROM python:3.9-slim
+
+WORKDIR /base
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.base.txt .
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip setuptools && \
+    pip install --no-cache-dir -r requirements.base.txt && \
+    python -m spacy download pt_core_news_sm && \
+    rm -rf /root/.cache/pip/*
+

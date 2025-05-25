@@ -1,5 +1,5 @@
 from typing import Dict, Optional
-from core.services.nlp import EntityExtractor
+from infrastructure.nlp.entity_extractor import EntityExtractor
 from domain.models.query import Query
 from core.config.settings import get_settings
 
@@ -9,8 +9,7 @@ class EntityService:
     def __init__(self, entity_extractor: Optional[EntityExtractor] = None):
         settings = get_settings()
         self.entity_extractor = entity_extractor or EntityExtractor(
-            model_name=settings.NER_MODEL,
-            fallback_model=settings.NER_FALLBACK_MODEL
+            model_name=settings.NER_MODEL
         )
     
     def extract_entities(self, text: str) -> Dict[str, str]:
