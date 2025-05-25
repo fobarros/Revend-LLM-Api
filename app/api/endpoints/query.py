@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 import uuid
 import logging
 
+from fastapi import Request
 from api.models.query_models import QueryRequest, QueryResponse
 from domain.services.query_service import QueryService
 from domain.services.entity_service import EntityService
@@ -14,7 +15,7 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 # Dependências
-def get_query_service():
+def get_query_service(request: Request):
     """Dependência para obter o serviço de consulta"""
     settings = get_settings()
     
@@ -27,9 +28,10 @@ def get_query_service():
     
     # Criar o repositório de sessões
     session_repository = StorageSessionRepository(storage)
-    
-    # Criar os serviços
-    entity_service = EntityService()
+
+    # Pegando o singleton já carregado
+    extractor = request.app.state.entity_extractor
+    entity_service = EntityService(entity_extractor=extractor)
     session_service = SessionService(session_repository)
     
     # Retornar o serviço de consulta

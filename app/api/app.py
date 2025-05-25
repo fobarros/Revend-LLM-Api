@@ -6,6 +6,7 @@ import time
 
 from api.endpoints import query, session
 from core.config.settings import get_settings
+from infrastructure.nlp.entity_extractor import EntityExtractor
 
 # Configuração de logging
 logging.basicConfig(
@@ -23,6 +24,11 @@ app = FastAPI(
     description="API para consulta de status de pedidos e notas fiscais",
     version="0.1.0"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Inicializando modelo NER (singleton)...")
+    app.state.entity_extractor = EntityExtractor(model_name="/models/ner-model")
 
 # Configurar CORS
 app.add_middleware(
