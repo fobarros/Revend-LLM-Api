@@ -35,6 +35,7 @@ class QueryService:
             query = self.entity_service.process_query(session_id, query_text)
             
             # Enriquecer a consulta com o contexto da sessão
+            logger.info(f"Contexto da sessão antes do enrich: {session.context}")
             query = self.entity_service.enrich_query_from_context(query, session.context)
             
             # Verificar se o distribuidor é suportado
