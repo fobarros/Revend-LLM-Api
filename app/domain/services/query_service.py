@@ -37,6 +37,25 @@ class QueryService:
             # Enriquecer a consulta com o contexto da sessão
             query = self.entity_service.enrich_query_from_context(query, session.context)
             
+            # Verificar se o distribuidor é suportado
+            if query.distribuidor and not self.entity_service.entity_extractor.is_distribuidor_suportado(query.distribuidor):
+                # Gerar resposta para distribuidor não suportado
+                response_text = f"Desculpe, atualmente não trabalhamos com o distribuidor {query.distribuidor}. Os distribuidores suportados são: Officer, Ingram e Golden."
+                
+                response = Response.success(
+                    session_id=session_id,
+                    query_text=query_text,
+                    response_text=response_text,
+                    distribuidor=query.distribuidor,
+                    pedido=query.pedido,
+                    nota_fiscal=query.nota_fiscal
+                )
+                
+                # Adicionar a interação ao histórico da sessão
+                self.session_service.add_interaction(session_id, query, response)
+                
+                return query, response
+            
             # Verificar se a consulta tem informações suficientes
             if not query.is_valid():
                 missing_fields = query.get_missing_fields()

@@ -137,8 +137,9 @@ class EntityExtractor:
         """Método de extração baseado em heurísticas quando os modelos falham"""
         result = {}
         
-        # Extrair possíveis distribuidores
-        distribuidores_conhecidos = ["officer", "alcateia", "ingram", "tdsynnex", "scansource"]
+        # Extrair possíveis distribuidores (tanto suportados quanto não suportados)
+        # Inclui todos os distribuidores que queremos reconhecer
+        distribuidores_conhecidos = ["officer", "ingram", "golden", "alcateia", "network1", "n1"]
         text_lower = text.lower()
         
         for distribuidor in distribuidores_conhecidos:
@@ -195,3 +196,13 @@ class EntityExtractor:
         """Limpa o texto da entidade, removendo caracteres indesejados"""
         # Remover espaços extras e caracteres especiais indesejados
         return text.strip()
+        
+    def is_distribuidor_suportado(self, distribuidor: str) -> bool:
+        """Verifica se o distribuidor é suportado pelo sistema"""
+        if not distribuidor:
+            return False
+            
+        # Lista de distribuidores oficialmente suportados
+        distribuidores_suportados = ["officer", "ingram", "golden"]
+        
+        return distribuidor.lower() in [d.lower() for d in distribuidores_suportados]

@@ -248,7 +248,7 @@ def create_example_training_data(output_file: str):
             ]
         },
         {
-            "text": "Nota fiscal 445566 da Alcateia já chegou?",
+            "text": "Nota fiscal 445566 da Ingram já chegou?",
             "entities": [
                 {"start": 12, "end": 18, "label": "NOTA_FISCAL"},
                 {"start": 22, "end": 30, "label": "DISTRIBUIDOR"}
@@ -262,7 +262,7 @@ def create_example_training_data(output_file: str):
             ]
         },
         {
-            "text": "Meu pedido na Alcateia é o 987654",
+            "text": "Meu pedido na Ingram é o 987654",
             "entities": [
                 {"start": 13, "end": 21, "label": "DISTRIBUIDOR"},
                 {"start": 26, "end": 32, "label": "PEDIDO"}
@@ -283,7 +283,7 @@ def create_example_training_data(output_file: str):
             ]
         },
         {
-            "text": "A nota 778899 da Alcateia ainda não chegou",
+            "text": "A nota 778899 da Ingram ainda não chegou",
             "entities": [
                 {"start": 7, "end": 13, "label": "NOTA_FISCAL"},
                 {"start": 17, "end": 25, "label": "DISTRIBUIDOR"}
@@ -297,12 +297,47 @@ def create_example_training_data(output_file: str):
             ]
         },
         {
-            "text": "Preciso rastrear o pedido 654321 da Alcateia",
+            "text": "Preciso rastrear o pedido 654321 da Ingram",
             "entities": [
                 {"start": 24, "end": 30, "label": "PEDIDO"},
                 {"start": 34, "end": 42, "label": "DISTRIBUIDOR"}
             ]
+        },
+        {
+            "text": "Tenho um pedido pendente com a Golden Distribuidora",
+            "entities": [
+                {"start": 30, "end": 50, "label": "DISTRIBUIDOR"}
+            ]
+        },
+        {
+            "text": "Quero acompanhar o pedido 889900 feito na Golden",
+            "entities": [
+                {"start": 24, "end": 30, "label": "PEDIDO"},
+                {"start": 42, "end": 48, "label": "DISTRIBUIDOR"}
+            ]
+        },
+        {
+            "text": "A nota fiscal 334455 da Golden Distribuidora está errada",
+            "entities": [
+                {"start": 13, "end": 19, "label": "NOTA_FISCAL"},
+                {"start": 23, "end": 43, "label": "DISTRIBUIDOR"}
+            ]
+        },
+        {
+            "text": "Conseguem verificar o pedido 777888 da Golden?",
+            "entities": [
+                {"start": 26, "end": 32, "label": "PEDIDO"},
+                {"start": 36, "end": 42, "label": "DISTRIBUIDOR"}
+            ]
+        },
+        {
+            "text": "A fatura 991122 com a Golden Distribuidora está no sistema?",
+            "entities": [
+                {"start": 10, "end": 16, "label": "NOTA_FISCAL"},
+                {"start": 22, "end": 42, "label": "DISTRIBUIDOR"}
+            ]
         }
+
     ]
     
     # Salvar os exemplos em um arquivo JSON
