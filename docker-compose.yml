@@ -17,7 +17,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=chave_secreta_para_desenvolvimento_local
       - PYTHONPATH=/app
-      - HUGGINGFACE_TOKEN=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
+      - HUGGINGFACE_TOKEN=
     depends_on:
       - redis
     restart: unless-stopped
